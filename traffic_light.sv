@@ -4,14 +4,13 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
   input preset, preset_add, force_red;
   output reg [0:2] leds;
   
-  reg [7:0] timer;
-  reg [3:0] last_state;
-  
-  reg [7:0] extra_time;
+  reg [7:0] timer = 8'd0;
+  reg [3:0] last_state = 4'd0;
+  reg [7:0] extra_time = 8'd0;
   
   enum {STATE_INITIAL, STATE_GREEN, STATE_YELLOW, STATE_RED, ADD_TIMER, ATTENTION, PRESET, ADD_PRESET} CurrentState, NextState;
   
-  always_comb begin
+  always_latch begin
     case (CurrentState)
       STATE_INITIAL: begin
         leds = 3'b000;
@@ -24,8 +23,12 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         end
       end
       PRESET: begin
+        leds = 3'b000;
+        last_state = 4'd0;
       end
       ADD_PRESET: begin
+        leds = 3'b000;
+        last_state = 4'd0;
         if (preset_add) extra_time = extra_time + 7'd10;
       end
       STATE_GREEN: begin
@@ -50,6 +53,10 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         last_state = 4'd3;
       end
       ADD_TIMER: begin
+        if (last_state == 4'd1) leds = 3'b100;
+        else if (last_state == 4'd2) leds = 3'b010;
+        else if (last_state == 4'd3) leds = 3'b001;
+        else leds = 3'b000;
         timer = timer + 7'd1;
       end
       ATTENTION: begin
