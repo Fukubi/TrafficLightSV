@@ -2,15 +2,27 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
   input clk, rst;
   input attention, preferential;
   input preset, preset_add, force_red;
+  
   output reg [0:2] leds;
+  reg [0:2] leds_ff;
   
   reg [7:0] timer = 8'd0;
+  reg [7:0] timer_ff;
+  
   reg [3:0] last_state = 4'd0;
+  reg [3:0] last_state_ff;
+  
   reg [7:0] extra_time = 8'd0;
+  reg [7:0] extra_time_ff;
   
   enum {STATE_INITIAL, STATE_GREEN, STATE_YELLOW, STATE_RED, ADD_TIMER, ATTENTION, PRESET, ADD_PRESET} CurrentState, NextState;
   
-  always_latch begin
+  always_comb begin
+    timer = timer_ff;
+    last_state = last_state_ff;
+    extra_time = extra_time_ff;
+    leds = leds_ff;
+    
     case (CurrentState)
       STATE_INITIAL: begin
         leds = 3'b000;
@@ -23,13 +35,9 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         end
       end
       PRESET: begin
-        leds = 3'b000;
-        last_state = 4'd0;
       end
       ADD_PRESET: begin
-        leds = 3'b000;
-        last_state = 4'd0;
-        if (preset_add) extra_time = extra_time + 7'd10;
+        extra_time = extra_time + 7'd10;
       end
       STATE_GREEN: begin
         leds = 3'b100;
@@ -53,10 +61,6 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         last_state = 4'd3;
       end
       ADD_TIMER: begin
-        if (last_state == 4'd1) leds = 3'b100;
-        else if (last_state == 4'd2) leds = 3'b010;
-        else if (last_state == 4'd3) leds = 3'b001;
-        else leds = 3'b000;
         timer = timer + 7'd1;
       end
       ATTENTION: begin
@@ -72,6 +76,11 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
   always_ff @(posedge clk) begin
     if (rst) CurrentState <= STATE_INITIAL;
     else CurrentState <= NextState;
+      
+    timer_ff <= timer;
+    extra_time_ff <= extra_time;
+    last_state_ff <= last_state;
+    leds_ff <= leds;
   end
   
   always_comb begin
@@ -85,11 +94,9 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
       PRESET: begin
         if (!preset) NextState = STATE_GREEN;
         else if (preset_add) NextState = ADD_PRESET;
-        else NextState = PRESET;
       end
       ADD_PRESET: begin
         if (!preset_add) NextState = PRESET;
-        else NextState = ADD_PRESET;
       end
       STATE_GREEN: begin
         if (force_red) NextState = STATE_RED;
@@ -112,7 +119,7 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         if (last_state == 4'd1) NextState = STATE_GREEN;
         else if (last_state == 4'd2) NextState = STATE_YELLOW;
         else if (last_state == 4'd3) NextState = STATE_RED;
-        else NextState = ATTENTION;
+        else if (last_state == 4'd4) NextState = ATTENTION;
       end
       ATTENTION: begin
         if (timer == 7'd1) NextState = STATE_YELLOW;

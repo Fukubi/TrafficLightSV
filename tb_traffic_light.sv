@@ -13,7 +13,7 @@ module tb_traffic_light;
   always #20 clk = ~clk;
   
   task xpect(input [2:0] exp_leds);
-    if (exp_leds != leds) begin
+    if (exp_leds !== leds) begin
       $display("       EXPECTED   ACTUAL");
       $display("LEDS   %b         %b", exp_leds, leds);
       $display("TRAFFIC LIGHTS TEST FAILED");
@@ -23,7 +23,7 @@ module tb_traffic_light;
   
   initial begin
     @(negedge clk)
-    {rst, attention, preferential, preset, preset_add, force_red} = 6'bX_X_X_X_X_X; @(negedge clk) xpect(3'bXXX);
+    {rst, attention, preferential, preset, preset_add, force_red} = 6'bX_X_X_X_X_X; @(negedge clk) xpect(3'b000);
     
     /**
       * Default path
