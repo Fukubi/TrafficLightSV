@@ -4,7 +4,9 @@ module tb_top_level;
   
   logic clk, rst;
   reg attention;
-  logic [3:0] presets, preset_adds, force_reds, preferentials;
+  logic preset;
+  logic lgreen;
+  logic [3:0] preset_adds, force_reds, preferentials;
   logic [3:0][0:2] ltfs;
   
   initial clk = 0;
@@ -26,60 +28,60 @@ module tb_top_level;
   
   initial begin
     @(negedge clk)
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'bX_X_XXXX_XXXX_XXXX_XXXX; xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'bX_X_X_XXXX_XXXX_XXXX; xpect(3'b000, 3'b000, 3'b000, 3'b000);
 
     /**
       * SEM 1 ON
     */   
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b1_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b1_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b1_X_X_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b1_X_X_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_X_X_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_X_X_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
 
     /**
       * SEM 2 ON
     */       
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
   
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b000, 3'b000);
     
     /**
       * SEM 3 ON
     */
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
     
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b000);
     
     /**
       * SEM 4 ON
     */
-    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b100);
+    {rst, attention, preset, preset_adds, force_reds, preferentials} = 15'b0_0_0_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b100, 3'b100, 3'b100);
     
     $display("TOP LEVEL TEST PASSED");
     $finish;

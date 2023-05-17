@@ -1,7 +1,10 @@
-module traffic_light(clk, rst, attention, preset, preset_add, force_red, preferential, leds);
+module traffic_light(clk, rst, attention, preset, preset_add, force_red, preferential, leds, lgreen);
   input clk, rst;
   input attention, preferential;
   input preset, preset_add, force_red;
+  
+  output reg lgreen;
+  reg lgreen_ff;
   
   output reg [0:2] leds;
   reg [0:2] leds_ff;
@@ -25,6 +28,7 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
 		last_state_ff <= 4'd0;
 		extra_time_ff <= 8'd0;
 		leds_ff <= 3'd0;
+		lgreen_ff <= 1'd0;
 	 end else begin
 		CurrentState <= NextState;
 		
@@ -32,6 +36,7 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
 		extra_time_ff <= extra_time;
 		last_state_ff <= last_state;
 		leds_ff <= leds;
+		lgreen_ff <= lgreen;
 	 end
   end
   
@@ -40,6 +45,8 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
     last_state = last_state_ff;
     extra_time = extra_time_ff;
     leds = leds_ff;
+	 
+	 lgreen = lgreen_ff;
     
     case (CurrentState)
       STATE_INITIAL: begin
@@ -53,9 +60,11 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         end
       end
       PRESET: begin
+			lgreen = 1'd0;
       end
       ADD_PRESET: begin
         extra_time = extra_time + 7'd10;
+		  lgreen = 1'd1;
       end
       STATE_GREEN: begin
         leds = 3'b100;

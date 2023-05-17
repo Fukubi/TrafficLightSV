@@ -6,6 +6,7 @@ module tb_traffic_light;
   logic [2:0] leds;
   logic attention, preferential, force_red;
   logic preset, preset_add;
+  logic lgreen;
   
   traffic_light tl(.*);
   
