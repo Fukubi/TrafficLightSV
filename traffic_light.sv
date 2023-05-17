@@ -17,6 +17,24 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
   
   enum {STATE_INITIAL, STATE_GREEN, STATE_YELLOW, STATE_RED, ADD_TIMER, ATTENTION, PRESET, ADD_PRESET} CurrentState, NextState;
   
+  always_ff @(posedge clk, posedge rst) begin
+    if (rst == 1'b1) begin
+		CurrentState <= STATE_INITIAL;
+		
+		timer_ff <= 8'd0;
+		last_state_ff <= 4'd0;
+		extra_time_ff <= 8'd0;
+		leds_ff <= 3'd0;
+	 end else begin
+		CurrentState <= NextState;
+		
+		timer_ff <= timer;
+		extra_time_ff <= extra_time;
+		last_state_ff <= last_state;
+		leds_ff <= leds;
+	 end
+  end
+  
   always_comb begin
     timer = timer_ff;
     last_state = last_state_ff;
@@ -71,16 +89,6 @@ module traffic_light(clk, rst, attention, preset, preset_add, force_red, prefere
         last_state = 4'd4;
       end
     endcase
-  end
-  
-  always_ff @(posedge clk) begin
-    if (rst) CurrentState <= STATE_INITIAL;
-    else CurrentState <= NextState;
-      
-    timer_ff <= timer;
-    extra_time_ff <= extra_time;
-    last_state_ff <= last_state;
-    leds_ff <= leds;
   end
   
   always_comb begin

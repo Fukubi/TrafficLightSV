@@ -32,6 +32,12 @@ module tb_top_level;
       * SEM 1 ON
     */   
     {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b1_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b1_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    
+    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_X_XXXX_XXXX_XXXX_XXXX; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
+    
+    {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b000, 3'b000, 3'b000, 3'b000);
     
     {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);
     {rst, attention, presets, preset_adds, force_reds, preferentials} = 18'b0_0_0000_0000_0000_0000; @(negedge clk) xpect(3'b100, 3'b000, 3'b000, 3'b000);

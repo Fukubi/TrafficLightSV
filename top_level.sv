@@ -1,4 +1,4 @@
-`define CLOCK_NAME clk
+`define CLOCK_NAME timedClk
 
 module top_level(clk, rst, attention, presets, preset_adds, force_reds, preferentials, ltfs);
   input clk, rst;
@@ -23,6 +23,21 @@ module top_level(clk, rst, attention, presets, preset_adds, force_reds, preferen
   traffic_light tl4(.clk(`CLOCK_NAME), .rst(resets[3]), .attention(attention), .preset(presets[3]), .preset_add(preset_adds[3]), .force_red(force_reds[3]), .preferential(preferentials[3]), .leds(ltfs[3]));
   
   enum {INITIAL, TRAFFIC_LIGHT_1, TRAFFIC_LIGHT_2, TRAFFIC_LIGHT_3, TRAFFIC_LIGHT_4, ADD_TIMER} CurrentState, NextState;
+  
+  always_ff @(posedge `CLOCK_NAME, posedge rst) begin
+    if (rst == 1'b1) begin
+		CurrentState <= INITIAL;
+		
+		timer_ff <= 8'd0;
+		resets_ff <= 4'd0;
+		last_state_ff <= 4'd0;
+	 end else begin
+		CurrentState <= NextState;
+		timer_ff <= timer;
+		resets_ff <= resets;
+		last_state_ff <= last_state;
+	end
+  end
   
   always_comb begin
     timer = timer_ff;
@@ -92,19 +107,11 @@ module top_level(clk, rst, attention, presets, preset_adds, force_reds, preferen
     endcase
   end
   
-  always_ff @(posedge clk) begin
-    if (rst) CurrentState <= INITIAL;
-    CurrentState <= NextState;
-    timer_ff <= timer;
-    resets_ff <= resets;
-    last_state_ff <= last_state;
-  end
-  
   always_comb begin
     NextState = CurrentState;
     
     case (CurrentState)
-      INITIAL: NextState <= TRAFFIC_LIGHT_1;
+      INITIAL: NextState = TRAFFIC_LIGHT_1;
       TRAFFIC_LIGHT_1: begin
         if (timer == 8'd3) NextState = TRAFFIC_LIGHT_2;
         else NextState = ADD_TIMER;

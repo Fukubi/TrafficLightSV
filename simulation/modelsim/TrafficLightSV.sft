@@ -1,5 +1,5 @@
-set tool_name "ModelSim-Altera (SystemVerilog)"
+set tool_name "ModelSim-Altera (VHDL)"
 set corner_file_list {
-	{{"Slow Model"} {TrafficLightSV.svo TrafficLightSV_v.sdo}}
-	{{"Fast Model"} {TrafficLightSV_fast.svo TrafficLightSV_v_fast.sdo}}
+	{{"Slow Model"} {TrafficLightSV.vho TrafficLightSV_vhd.sdo}}
+	{{"Fast Model"} {TrafficLightSV_fast.vho TrafficLightSV_vhd_fast.sdo}}
 }
