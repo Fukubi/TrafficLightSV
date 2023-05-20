@@ -1,4 +1,4 @@
-`define CLOCK_NAME timedClk
+`define CLOCK_NAME clk
 
 module top_level(clk, rst, attention, preset, preset_adds, force_reds, preferentials, ltfs, lgreen);
   input clk, rst;
