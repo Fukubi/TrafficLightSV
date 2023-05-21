@@ -1,5 +1,5 @@
 # TrafficLightSV
-A Inteligent TrafficLight description in SystemVerilog
+A SystemVerilog description in a Smart Traffic Light that works with preset, can be set to specific extra time, has a preferential line and works with a sensor that, when negated, can be set to detect when there is traffic in the road.
 
 ## STATES
 
